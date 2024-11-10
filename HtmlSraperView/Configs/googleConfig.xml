@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<!-- des properties sont à la disposition de l'utilisateur pour avoir un dynamisme sur la config
+	exemple 
+	<property name="proxyport">8080</property>
+	<proxy url="http://my.free.proxy.com:{proxyport}"/>
+	<blacklist variable="ItemId" value="{value}"/>
+	-->
+	<!-- declaration des proxy
+	     un proxy au hasard sera utilisé parmis cette liste
+		 pour NE PAS utiliser de proxy, supprimez tous les noeuds <proxy/>
+		<proxy url="http://127.0.0.1:8080"/>
+		<proxy url="http://my.free.proxy.com:8080"/>
+	-->
+
+	<scrapper name="Auchan">
+		<list loop="page:1:1">
+			<web method="get" url="https://www.google.com/search?q=.net?start={page}0" chrome="true">
+				<select query="#rcnt .dURPMd .MjjYud" to="lst">
+					<select query=".yuRUbf a" single="true">
+						<attribute attribute="href" to="url"/>
+					</select>
+					<select query=".LC20lb" single="true">
+						<text trim="true" htmldecode="true" to="Title"/>
+					</select>
+					<select query=".VwiC3b" single="true">
+						<text trim="true" htmldecode="true" to="Description"/>
+					</select>
+				</select>
+			</web>
+		</list>
+	</scrapper>
+</root>
