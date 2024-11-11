@@ -13,9 +13,9 @@
 		<proxy url="http://my.free.proxy.com:8080"/>
 	-->
 
-	<scrapper name="Auchan">
+	<scraper name="Google">
 		<list loop="page:1:1">
-			<web method="get" url="https://www.google.com/search?q=.net?start={page}0" chrome="true">
+			<web method="get" url="https://www.google.com/search?q=.net?start={page}0">
 				<select query="#rcnt .dURPMd .MjjYud" to="lst">
 					<select query=".yuRUbf a" single="true">
 						<attribute attribute="href" to="url"/>
@@ -29,5 +29,5 @@
 				</select>
 			</web>
 		</list>
-	</scrapper>
+	</scraper>
 </root>
