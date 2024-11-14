@@ -1,11 +1,6 @@
 ﻿using HtmlAgilityPack;
 using PuppeteerSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using HtmlScraperLibrary.Extensions;
 
@@ -181,7 +176,7 @@ namespace HtmlScraperLibrary.Components
 
             var options = new LaunchOptions()
             {
-                ExecutablePath = @"C:\Program Files\Google\Chrome\Application\chrome.exe",
+                ExecutablePath = Scraper.CHROME_PATH,
                 Headless = false,
                 Args = new string[] {
                 }

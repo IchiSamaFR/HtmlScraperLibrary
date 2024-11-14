@@ -8,6 +8,8 @@ namespace HtmlScraperLibrary
 {
     public class Scraper
     {
+        internal static string CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+
         public Scraper(ComponentConfig context)
         {
             _config = context;
@@ -153,6 +155,11 @@ namespace HtmlScraperLibrary
                     lsts.Add(JsonNode.Parse(removed.ToString()));
                 }
             }
+        }
+
+        public void ConfigureChromePath(string path)
+        {
+            CHROME_PATH = path;
         }
     }
 }
