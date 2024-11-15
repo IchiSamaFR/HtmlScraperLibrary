@@ -8,9 +8,9 @@ namespace HtmlScraperLibrary.Components
     /// <summary>
     /// Pages
     /// </summary>
-    public class ComponentLoop
+    public class ComponentList
     {
-        public const string KEY = "loop";
+        public const string KEY = "list";
 
         private ComponentConfig _config;
         private string _loopName;
@@ -52,14 +52,14 @@ namespace HtmlScraperLibrary.Components
             }
         }
 
-        private ComponentLoop()
+        private ComponentList()
         {
 
         }
-        internal ComponentLoop(XElement e, ComponentConfig config)
+        internal ComponentList(XElement e, ComponentConfig config)
         {
             _config = config;
-            var loop = e.Attribute(KEY)?.Value.Split(':');
+            var loop = e.Attribute("loop")?.Value.Split(':');
             LoopName = loop?[0];
             LoopStart = loop?[1];
             LoopEnd = loop?[2];

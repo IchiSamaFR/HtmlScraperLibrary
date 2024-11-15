@@ -9,7 +9,7 @@ namespace HtmlScraperLibrary.Components
 {
     public class ComponentBlacklist
     {
-        public const string KEY = "select";
+        public const string KEY = "blacklist";
 
         private ComponentConfig _config;
         private string _variable;

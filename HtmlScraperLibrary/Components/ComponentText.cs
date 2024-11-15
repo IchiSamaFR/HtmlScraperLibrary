@@ -26,7 +26,6 @@ namespace HtmlScraperLibrary.Components
             RegexGroup = e.Attribute("regexgroup")?.Value ?? "1";
             IsTrim = e.BooleanAttribute("trim");
             IsHtmlDecode = e.BooleanAttribute("htmldecode");
-            IsContain = e.BooleanAttribute("iscontain");
             To = e.Attribute("to")?.Value ?? "text-" + Guid.NewGuid().ToString();
             Property = e.Attribute("property")?.Value ?? string.Empty;
             Empty = e.Attribute("empty")?.Value ?? string.Empty;
@@ -42,27 +41,13 @@ namespace HtmlScraperLibrary.Components
             var tmp = Regex
                 .Matches(string.Join("", e.ChildNodes.Select(node => node.InnerText)).Trim())
                 .FirstOrDefault(m => true);
-            var val = Regex
+            return Regex
                 .Matches(string.Join("", e.ChildNodes.Select(node => node.InnerText)).Trim())
                 .FirstOrDefault(m => true)?
                 .Groups[RegexGroup]?.Value
                 .HTMLDecode(IsHtmlDecode)
                 .Trim(IsTrim)
                 .Replace(Replace) ?? Empty;
-            return IsContain ? ReturnAsLiquid(val) : val;
-        }
-        private string ReturnAsLiquid(string val)
-        {
-            var isLiter = !val.ToLower().Contains("cl");
-
-            val = val.Replace("c", "").Replace("l", "");
-            if (isLiter)
-            {
-                var tmp = val.Replace(',', '.').Split('.');
-                val = tmp[0] + (tmp.Count() > 1 ? tmp[1].Right(2, '0') : "00");
-            }
-
-            return val;
         }
     }
 }
