@@ -22,7 +22,6 @@ namespace HtmlScraperLibrary.Components
             _config = config;
             Attribute = e.Attribute(KEY)?.Value ?? string.Empty;
             Regex = new Regex(e.Attribute("regex")?.Value ?? "(.*)");
-            RegexGroup = e.Attribute("regexgroup")?.Value ?? "1";
             IsTrim = e.BooleanAttribute("trim");
             IsHtmlDecode = e.BooleanAttribute("htmldecode");
             To = e.Attribute("to")?.Value ?? "text-" + Guid.NewGuid().ToString();
@@ -44,7 +43,7 @@ namespace HtmlScraperLibrary.Components
             return Regex
                 .Matches(string.Join("", tmpBefore, e.GetAttributes(Attribute).FirstOrDefault()?.Value))
                 .FirstOrDefault(m => true)?
-                .Groups[RegexGroup]?.Value
+                .Groups[1]?.Value
                 .HTMLDecode(IsHtmlDecode)
                 .Trim(IsTrim)
                 .Replace(Replace) ?? Empty;

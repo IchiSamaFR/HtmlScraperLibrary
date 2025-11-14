@@ -17,7 +17,6 @@ namespace HtmlScraperLibrary.Components
         private string _to;
 
         public Regex Regex { get; protected set; }
-        public string RegexGroup { get; protected set; }
         public string Property { get; protected set; }
         public bool IsTrim { get; protected set; }
         public bool IsHtmlDecode { get; protected set; }

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<loop name="page" start="1" end="1">
+		<web url="Configs/google.html" method="get">
+			<select query=".result" outputKey="results">
+				<select query="h3" outputKey="title">
+					<text outputKey="txt"/>
+				</select>
+				<select query=".desc" outputKey="description">
+					<text outputKey="txta"/>
+				</select>
+				<select query=".lst" outputKey="lst" IsArray="true">
+					<text outputKey="item"/>
+				</select>
+			</select>
+		</web>
+	</loop>
+</root>

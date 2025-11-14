@@ -14,14 +14,14 @@ namespace HtmlScraperLibrary.Components
         public ComponentConfig Config { get; set; }
         public string Name { get; private set; }
         public ComponentSelect Select { get; private set; }
-        public List<ComponentList> List { get; private set; }
+        public List<ComponentLoop> List { get; private set; }
         public List<ComponentBlacklist> Blacklist { get; private set; }
 
         public ComponentScraper(XElement e, ComponentConfig context)
         {
             Config = context;
             Name = e.Attribute("name")?.Value ?? string.Empty;
-            List = e.Childs(ComponentList.KEY, list => new ComponentList(list, context));
+            List = e.Childs(ComponentLoop.KEY, list => new ComponentLoop(list, context));
             Blacklist = e.Childs(ComponentBlacklist.KEY, blacklist => new ComponentBlacklist(blacklist, context));
         }
     }

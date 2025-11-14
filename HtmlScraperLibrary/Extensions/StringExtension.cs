@@ -20,18 +20,6 @@ namespace HtmlScraperLibrary.Extensions
         {
             return active ? str.Trim() : str;
         }
-        public static string Right(this string str, int count, char character)
-        {
-            if (str.Length < count)
-            {
-                str += new string(character, count - str.Length);
-            }
-            else
-            {
-                str = str.Substring(0, Math.Min(str.Length, count));
-            }
-            return str;
-        }
         public static string HTMLDecode(this string str, bool active)
         {
             return active ? HttpUtility.HtmlDecode(str) : str;
@@ -52,6 +40,14 @@ namespace HtmlScraperLibrary.Extensions
                 return result;
             }
             return 0;
+        }
+        public static bool ToBool(this string str)
+        {
+            if (bool.TryParse(str, out bool result))
+            {
+                return result;
+            }
+            return false;
         }
         public static decimal ToDecimal(this string str)
         {
