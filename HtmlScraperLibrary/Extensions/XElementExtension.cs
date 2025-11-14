@@ -24,13 +24,13 @@ namespace HtmlScraperLibrary.Extensions
         {
             return string.Concat(element.Nodes().OfType<XText>().Select(t => t.Value));
         }
+        public static string StringAttribute(this XElement element, string attributeName)
+        {
+            return element.Attribute(attributeName)?.Value ?? string.Empty;
+        }
         public static bool BooleanAttribute(this XElement element, string attributeName)
         {
             return (element.Attribute(attributeName)?.Value.ToLower() ?? string.Empty) == "true";
         }
-
     }
-
-
-
 }
