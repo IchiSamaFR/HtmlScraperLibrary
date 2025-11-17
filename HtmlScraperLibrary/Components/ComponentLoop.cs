@@ -8,6 +8,7 @@ namespace HtmlScraperLibrary.Components
     /// <summary>
     /// Pages
     /// </summary>
+    [Obsolete]
     public class ComponentLoop
     {
         public const string KEY = "loop";

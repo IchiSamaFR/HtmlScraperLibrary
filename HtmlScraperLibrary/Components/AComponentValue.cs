@@ -11,6 +11,7 @@ namespace HtmlScraperLibrary.Components
     /// <summary>
     /// ComponentSelector is an abstract class to be the one which get the value
     /// </summary>
+    [Obsolete]
     public abstract class AComponentValue
     {
         protected ComponentConfig _config;

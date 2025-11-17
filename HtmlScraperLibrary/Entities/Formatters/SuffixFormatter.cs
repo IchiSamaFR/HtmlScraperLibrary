@@ -5,20 +5,24 @@ namespace HtmlScraperLibrary.Entities.Formatters
 {
     public class SuffixFormatter : ATextFormatter
     {
-        public const string KEY = "suffix";
+        public const string KEY = "Suffix";
 
-        private string _value;
-        public string Value
+        public string Value { get; set; }
+
+        public string ValueProperty
         {
-            get => _context?.ApplyProperty(_value) ?? _value;
+            get => _context?.ApplyProperty(Value) ?? Value;
         }
+
+        public SuffixFormatter() : base() { }
+
         public SuffixFormatter(XElement element)
         {
-            _value = element.StringAttribute("value");
+            Value = element.StringAttribute(nameof(Value));
         }
         public override string Format(string input)
         {
-            return $"{input}{Value}";
+            return $"{input}{ValueProperty}";
         }
     }
 }

@@ -7,6 +7,7 @@ namespace HtmlScraperLibrary.Components
     /// <summary>
     /// Scraper contains all loops for a scrap
     /// </summary>
+    [Obsolete]
     public class ComponentScraper
     {
         public const string KEY = "scraper";

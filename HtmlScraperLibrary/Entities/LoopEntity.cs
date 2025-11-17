@@ -7,38 +7,37 @@ namespace HtmlScraperLibrary.Entities
 {
     public class LoopEntity : AParentEntity
     {
-        public const string KEY = "loop";
+        public const string KEY = "Loop";
 
-        private string _from;
-        private string _to;
-        private string _step;
+        public string From { get; set; } = "0";
+        public string To { get; set; } = "0";
+        public string Step { get; set; } = "0";
+        public int ActualStep { get; set; }
 
-        public int From
+        public int FromProperty
         {
-            get => _context?.ApplyProperty(_from).ToInt() ?? _from.ToInt();
+            get => _context?.ApplyProperty(From).ToInt() ?? From.ToInt();
         }
-        public int To
+        public int ToProperty
         {
-            get => _context?.ApplyProperty(_to).ToInt() ?? _to.ToInt();
+            get => _context?.ApplyProperty(To).ToInt() ?? To.ToInt();
         }
-        public int Step
+        public int StepProperty
         {
-            get => _context?.ApplyProperty(_step).ToInt() ?? _step.ToInt();
+            get => _context?.ApplyProperty(Step).ToInt() ?? Step.ToInt();
+        }
+        public int ActualStepProperty
+        {
+            get => ActualStep;
         }
 
-        public string ContextFromKey;
-        public string ContextToKey;
-        public string ContextStepKey;
-
+        public LoopEntity() : base() { }
         public LoopEntity(XElement e) : base(e)
         {
-            _from = e.StringAttribute("from");
-            _to = e.StringAttribute("to");
-            _step = e.StringAttribute("step");
-            _step = string.IsNullOrEmpty(_step) ? "1" : _step;
-            ContextFromKey = e.StringAttribute("contextFromKey");
-            ContextToKey = e.StringAttribute("contextToKey");
-            ContextStepKey = e.StringAttribute("contextStepKey");
+            From = e.StringAttribute(nameof(From));
+            To = e.StringAttribute(nameof(To));
+            Step = e.StringAttribute(nameof(Step));
+            Step = string.IsNullOrEmpty(Step) ? "1" : Step;
         }
 
         public override void SetProperties()
@@ -46,18 +45,14 @@ namespace HtmlScraperLibrary.Entities
             if (_context == null)
                 return;
 
-            if (!string.IsNullOrEmpty(ContextFromKey))
+            if (string.IsNullOrEmpty(NameProperty))
             {
-                _context?.SetProperty(ContextFromKey, From.ToString());
+                return;
             }
-            if (!string.IsNullOrEmpty(ContextToKey))
-            {
-                _context?.SetProperty(ContextToKey, To.ToString());
-            }
-            if (!string.IsNullOrEmpty(ContextStepKey))
-            {
-                _context?.SetProperty(ContextStepKey, Step.ToString());
-            }
+            _context?.SetProperty($"{Name}.{nameof(From)}", From.ToString());
+            _context?.SetProperty($"{Name}.{nameof(To)}", To.ToString());
+            _context?.SetProperty($"{Name}.{nameof(Step)}", Step.ToString());
+            _context?.SetProperty($"{Name}.{nameof(ActualStep)}", ActualStep.ToString());
         }
 
         public override async Task Extract(JsonNode jNode, HtmlNode node)
@@ -65,10 +60,10 @@ namespace HtmlScraperLibrary.Entities
             if (Children == null || Children.Count == 0)
                 return;
 
-            if (!string.IsNullOrEmpty(OutputKey))
+            if (!string.IsNullOrEmpty(OutputKeyProperty))
             {
                 // Utilise un tableau pour collecter les résultats de la boucle
-                for (int i = From; i < To; i += Step)
+                for (ActualStep = FromProperty; ActualStep < ToProperty; ActualStep += StepProperty)
                 {
                     SetProperties();
                     var arrayResult = new JsonArray();
@@ -79,18 +74,18 @@ namespace HtmlScraperLibrary.Entities
 
                     if (jNode is JsonObject obj)
                     {
-                        obj[OutputKey] = arrayResult;
+                        obj[OutputKeyProperty] = arrayResult;
                     }
                     else if (jNode is JsonArray arr)
                     {
-                        arr.Add(new JsonObject { [OutputKey] = arrayResult });
+                        arr.Add(new JsonObject { [OutputKeyProperty] = arrayResult });
                     }
                 }
             }
             else
             {
                 // Passe directement jNode aux enfants pour chaque itération
-                for (int i = From; i < To; i += Step)
+                for (int i = FromProperty; i < ToProperty; i += StepProperty)
                 {
                     foreach (var child in Children)
                     {

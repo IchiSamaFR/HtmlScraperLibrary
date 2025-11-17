@@ -6,6 +6,7 @@ using HtmlScraperLibrary.Extensions;
 
 namespace HtmlScraperLibrary.Components
 {
+    [Obsolete]
     public class ComponentWeb
     {
         public const string KEY = "web";

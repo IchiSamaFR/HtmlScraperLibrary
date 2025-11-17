@@ -18,16 +18,24 @@ namespace HtmlScraperLibrary.Entities
     {
         protected ContextEntity? _context = null!;
 
-        private string _outputKey = string.Empty;
+        public string OutputKey { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
-        public string OutputKey
+        public string OutputKeyProperty
         {
-            get => _context?.ApplyProperty(_outputKey) ?? _outputKey;
+            get => _context?.ApplyProperty(OutputKey) ?? OutputKey;
         }
+        public string NameProperty
+        {
+            get => _context?.ApplyProperty(Name) ?? Name;
+        }
+
+        public AEntity() { }
 
         public AEntity(XElement element)
         {
-            _outputKey = element.StringAttribute("outputKey");
+            OutputKey = element.StringAttribute(nameof(OutputKey));
+            Name = element.StringAttribute(nameof(Name));
         }
 
         public virtual void LoadContext(ContextEntity context)

@@ -13,6 +13,7 @@ namespace HtmlScraperLibrary.Components
     /// <summary>
     /// Config file contains all scrapers
     /// </summary>
+    [Obsolete]
     public class ComponentConfig
     {
         private readonly XDocument _xDocument;

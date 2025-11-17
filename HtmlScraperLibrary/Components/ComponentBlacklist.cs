@@ -7,6 +7,7 @@ using System.Xml.Linq;
 
 namespace HtmlScraperLibrary.Components
 {
+    [Obsolete]
     public class ComponentBlacklist
     {
         public const string KEY = "blacklist";

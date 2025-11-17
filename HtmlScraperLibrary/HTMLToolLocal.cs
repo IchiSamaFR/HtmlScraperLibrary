@@ -11,6 +11,7 @@ using HtmlScraperLibrary.Components;
 
 namespace HtmlScraperLibrary
 {
+    [Obsolete]
     internal static class HTMLToolLocal
     {
         public static JsonObject StartAnalyse(HtmlDocument doc, ComponentSelect select, JsonObject o = null)

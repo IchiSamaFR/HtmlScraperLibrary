@@ -6,6 +6,7 @@ namespace HtmlScraperLibrary.Components
     /// <summary>
     /// Under a ComponentSelector, replace the value to another
     /// </summary>
+    [Obsolete]
     public class ComponentReplace
     {
         public const string KEY = "replace";

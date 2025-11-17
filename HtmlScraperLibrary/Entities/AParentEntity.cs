@@ -6,10 +6,11 @@ using System.Xml.Linq;
 
 namespace HtmlScraperLibrary.Entities
 {
-    public class AParentEntity : AEntity
+    public abstract class AParentEntity : AEntity
     {
         public List<AEntity> Children { get; } = new List<AEntity>();
 
+        public AParentEntity() { }
         public AParentEntity(XElement element) : base(element)
         {
             Children.AddRange(element.Elements().Select(EntityBuilder.BuildFromXml).Where(n => n != null).ToList()!);
@@ -29,7 +30,7 @@ namespace HtmlScraperLibrary.Entities
             if (Children == null)
                 return;
 
-            if (!string.IsNullOrEmpty(OutputKey))
+            if (!string.IsNullOrEmpty(OutputKeyProperty))
             {
                 // Utilise un objet temporaire pour collecter les résultats
                 var resultNode = new JsonObject();
@@ -37,7 +38,7 @@ namespace HtmlScraperLibrary.Entities
                 {
                     await child.Extract(resultNode, node);
                 }
-                jObject[OutputKey] = resultNode.DeepClone();
+                jObject[OutputKeyProperty] = resultNode.DeepClone();
             }
             else
             {

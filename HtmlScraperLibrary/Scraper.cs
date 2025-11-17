@@ -6,6 +6,7 @@ using HtmlScraperLibrary.Extensions;
 
 namespace HtmlScraperLibrary
 {
+    [Obsolete]
     public class Scraper
     {
         internal static string CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";

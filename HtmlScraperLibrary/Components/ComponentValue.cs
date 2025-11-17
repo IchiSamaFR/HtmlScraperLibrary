@@ -13,6 +13,7 @@ namespace HtmlScraperLibrary.Components
     /// Herited from ComponentSelector
     /// - Get the value from a plain text
     /// </summary>
+    [Obsolete]
     public class ComponentValue : AComponentValue
     {
         public const string KEY = "value";

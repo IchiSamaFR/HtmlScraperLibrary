@@ -9,7 +9,7 @@ namespace HtmlScraperLibrary.Entities
 {
     public class TextEntity : AEntity
     {
-        public const string KEY = "text";
+        public const string KEY = "Text";
 
         public List<ATextFormatter> Formatters { get; } = new List<ATextFormatter>();
         public TextEntity(XElement element) : base(element)
@@ -37,9 +37,9 @@ namespace HtmlScraperLibrary.Entities
 
             if (jObject is JsonArray arr)
             {
-                if (!string.IsNullOrEmpty(OutputKey))
+                if (!string.IsNullOrEmpty(OutputKeyProperty))
                 {
-                    var obj = new JsonObject { [OutputKey] = text };
+                    var obj = new JsonObject { [OutputKeyProperty] = text };
                     arr.Add(obj);
                 }
                 else
@@ -49,9 +49,9 @@ namespace HtmlScraperLibrary.Entities
             }
             else if (jObject is JsonObject obj)
             {
-                if (!string.IsNullOrEmpty(OutputKey))
+                if (!string.IsNullOrEmpty(OutputKeyProperty))
                 {
-                    obj[OutputKey] = text;
+                    obj[OutputKeyProperty] = text;
                 }
                 else
                 {

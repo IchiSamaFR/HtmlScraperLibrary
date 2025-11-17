@@ -5,20 +5,23 @@ namespace HtmlScraperLibrary.Entities.Formatters
 {
     public class PrefixFormatter : ATextFormatter
     {
-        public const string KEY = "prefix";
+        public const string KEY = "Prefix";
 
-        private string _value;
-        public string Value
+        private string Value;
+        public string ValueProperty
         {
-            get => _context?.ApplyProperty(_value) ?? _value;
+            get => _context?.ApplyProperty(Value) ?? Value;
         }
+
+        public PrefixFormatter() { }
         public PrefixFormatter(XElement element)
         {
-            _value = element.StringAttribute("value");
+            Value = element.StringAttribute(nameof(Value));
         }
+
         public override string Format(string input)
         {
-            return $"{Value}{input}";
+            return $"{ValueProperty}{input}";
         }
     }
 }

@@ -8,25 +8,24 @@ namespace HtmlScraperLibrary.Entities
 {
     public class SelectEntity : AParentEntity
     {
-        private string _isArray;
-        public bool IsArray
+        public const string KEY = "Select";
+
+        public string IsArray { get; set; }
+        public string Query { get; set; }
+
+        public bool IsArrayProperty
         {
-            get => (_context?.ApplyProperty(_isArray) ?? _isArray).ToBool();
+            get => (_context?.ApplyProperty(IsArray) ?? IsArray).ToBool();
         }
-
-        public const string KEY = "select";
-
-        private string _query;
-
-        public string Query
+        public string QueryProperty
         {
-            get => _context?.ApplyProperty(_query) ?? _query;
+            get => _context?.ApplyProperty(Query) ?? Query;
         }
 
         public SelectEntity(XElement element) : base(element)
         {
-            _isArray = element.StringAttribute("isArray");
-            _query = element.StringAttribute("query");
+            IsArray = element.StringAttribute(nameof(IsArray));
+            Query = element.StringAttribute(nameof(Query));
         }
 
         public override async Task Extract(JsonNode jObject, HtmlNode node)
@@ -35,23 +34,23 @@ namespace HtmlScraperLibrary.Entities
                 return;
 
             List<HtmlNode> nodesQuery = new();
-            if (string.IsNullOrEmpty(Query))
+            if (string.IsNullOrEmpty(QueryProperty))
             {
                 nodesQuery.Add(node);
             }
-            else if (IsArray)
+            else if (IsArrayProperty)
             {
-                nodesQuery.AddRange(node.QuerySelectorAll(Query));
+                nodesQuery.AddRange(node.QuerySelectorAll(QueryProperty));
             }
             else
             {
-                nodesQuery.Add(node.QuerySelector(Query));
+                nodesQuery.Add(node.QuerySelector(QueryProperty));
             }
 
-            if (!string.IsNullOrEmpty(OutputKey))
+            if (!string.IsNullOrEmpty(OutputKeyProperty))
             {
                 // On prépare le conteneur de résultat selon IsArray
-                JsonNode resultNode = IsArray ? new JsonArray() : new JsonObject();
+                JsonNode resultNode = IsArrayProperty ? new JsonArray() : new JsonObject();
 
                 foreach (var query in nodesQuery.Where(n => n != null))
                 {
@@ -61,7 +60,7 @@ namespace HtmlScraperLibrary.Entities
                     }
                 }
 
-                jObject[OutputKey] = resultNode.DeepClone();
+                jObject[OutputKeyProperty] = resultNode.DeepClone();
             }
             else
             {

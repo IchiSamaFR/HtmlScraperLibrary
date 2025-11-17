@@ -12,6 +12,7 @@ namespace HtmlScraperLibrary.Components
     /// <summary>
     /// Permit to add a value before
     /// </summary>
+    [Obsolete]
     public class ComponentBeforeValue
     {
         public const string KEY = "before";

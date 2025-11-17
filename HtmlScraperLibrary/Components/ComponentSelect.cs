@@ -8,6 +8,7 @@ namespace HtmlScraperLibrary.Components
     /// <summary>
     /// Component allows you to precisely select the node on which you want to work as a funnel
     /// </summary>
+    [Obsolete]
     public class ComponentSelect
     {
         public const string KEY = "select";

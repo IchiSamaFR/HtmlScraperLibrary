@@ -6,38 +6,38 @@ namespace HtmlScraperLibrary.Entities.Formatters
 {
     public class ReplaceFormatter : ATextFormatter
     {
-        public const string KEY = "replace";
+        public const string KEY = "Replace";
 
-        private string _oldValue;
-        private string _newValue;
-        private string _isRegex;
+        public string OldValue{get;set;}
+        public string NewValue{get;set;}
+        public string IsRegex{get;set;}
 
-        public string OldValue
+        public string OldValueProperty
         {
-            get => _context?.ApplyProperty(_oldValue) ?? _oldValue;
+            get => _context?.ApplyProperty(OldValue) ?? OldValue;
         }
-        public string NewValue
+        public string NewValueProperty
         {
-            get => _context?.ApplyProperty(_newValue) ?? _newValue;
+            get => _context?.ApplyProperty(NewValue) ?? NewValue;
         }
-        public bool IsRegex
+        public bool IsRegexProperty
         {
-            get => (_context?.ApplyProperty(_isRegex) ?? _isRegex).ToBool();
+            get => (_context?.ApplyProperty(IsRegex) ?? IsRegex).ToBool();
         }
 
         public ReplaceFormatter(XElement element)
         {
-            _oldValue = element.StringAttribute("oldValue");
-            _newValue = element.StringAttribute("newValue");
-            _isRegex = element.StringAttribute("isRegex");
+            OldValue = element.StringAttribute(nameof(OldValue));
+            NewValue = element.StringAttribute(nameof(NewValue));
+            IsRegex = element.StringAttribute(nameof(IsRegex));
         }
 
         public override string Format(string input)
         {
-            if (IsRegex)
-                return Regex.Replace(input, OldValue, NewValue);
+            if (IsRegexProperty)
+                return Regex.Replace(input, OldValueProperty, NewValueProperty);
             else
-                return input.Replace(OldValue, NewValue);
+                return input.Replace(OldValueProperty, NewValueProperty);
         }
     }
 }
