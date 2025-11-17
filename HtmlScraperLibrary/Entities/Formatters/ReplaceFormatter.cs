@@ -23,6 +23,7 @@ namespace HtmlScraperLibrary.Entities.Formatters
             get => (_context?.ApplyProperty(IsRegex) ?? IsRegex).ToBool();
         }
 
+        public ReplaceFormatter() : base() { }
         public ReplaceFormatter(XElement element)
         {
             OldValue = element.StringAttribute(nameof(OldValue));

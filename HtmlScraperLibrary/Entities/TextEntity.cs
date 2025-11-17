@@ -11,10 +11,20 @@ namespace HtmlScraperLibrary.Entities
 {
     public class TextEntity : AEntity
     {
+        public string Empty { get; set; } = string.Empty;
+
+        public string EmptyProperty
+        {
+            get => _context?.ApplyProperty(Empty) ?? Empty;
+        }
+
         public List<ATextFormatter> Formatters { get; } = new List<ATextFormatter>();
+
+        public TextEntity() : base() { }
         public TextEntity(XElement element) : base(element)
         {
             Formatters.AddRange(element.Elements().Select(FormatterBuilder.BuildFromXml).Where(n => n != null).ToList()!);
+            Empty = element.StringAttribute(nameof(Empty));
         }
 
         public override void LoadContext(ContextEntity context)
@@ -34,6 +44,7 @@ namespace HtmlScraperLibrary.Entities
             {
                 text = format.Format(text);
             }
+            text = string.IsNullOrEmpty(text) ? EmptyProperty : text;
 
             if (jObject is JsonArray arr)
             {

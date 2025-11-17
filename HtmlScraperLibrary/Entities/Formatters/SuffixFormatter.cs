@@ -13,7 +13,6 @@ namespace HtmlScraperLibrary.Entities.Formatters
         }
 
         public SuffixFormatter() : base() { }
-
         public SuffixFormatter(XElement element)
         {
             Value = element.StringAttribute(nameof(Value));

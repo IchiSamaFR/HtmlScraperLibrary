@@ -35,4 +35,8 @@
 			<Attribute Value="data-id" OutputKey="id" />
 		</Select>
 	</Select>
+	
+	<Select  Query=".empty">
+		<Text Empty="EmptyData" OutputKey="empty"/>
+	</Select>
 </Root>

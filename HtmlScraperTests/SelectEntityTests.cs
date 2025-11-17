@@ -73,5 +73,11 @@ public class SelectEntityTests
         Assert.Equal("img2.png", img2["src"]?.ToString());
         Assert.Equal("Image 2", img2["alt"]?.ToString());
         Assert.Equal("102", img2["id"]?.ToString());
+
+        // Assert - Empty
+        Assert.True(json.ContainsKey("empty"));
+        var empty = json["empty"] as JsonNode;
+        Assert.NotNull(empty);
+        Assert.Equal("EmptyData", empty);
     }
 }

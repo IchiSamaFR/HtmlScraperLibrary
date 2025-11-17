@@ -17,6 +17,7 @@ namespace HtmlScraperLibrary.Entities
         }
 
         public List<ATextFormatter> Formatters { get; } = new List<ATextFormatter>();
+        public AttributeEntity() : base() { }
         public AttributeEntity(XElement element) : base(element)
         {
             Formatters.AddRange(element.Elements().Select(FormatterBuilder.BuildFromXml).Where(n => n != null).ToList()!);

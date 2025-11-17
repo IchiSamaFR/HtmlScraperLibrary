@@ -20,6 +20,7 @@ namespace HtmlScraperLibrary.Entities
             get => _context?.ApplyProperty(Query) ?? Query;
         }
 
+        public SelectEntity() : base() { }
         public SelectEntity(XElement element) : base(element)
         {
             IsArray = element.StringAttribute(nameof(IsArray));
