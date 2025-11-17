@@ -15,25 +15,20 @@ namespace HtmlScraperLibrary.Entities
 
         public int From
         {
-            get
-            {
-                return _context?.ApplyProperty(_from).ToInt() ?? _from.ToInt();
-            }
+            get => _context?.ApplyProperty(_from).ToInt() ?? _from.ToInt();
         }
         public int To
         {
-            get
-            {
-                return _context?.ApplyProperty(_to).ToInt() ?? _to.ToInt();
-            }
+            get => _context?.ApplyProperty(_to).ToInt() ?? _to.ToInt();
         }
         public int Step
         {
-            get
-            {
-                return _context?.ApplyProperty(_step).ToInt() ?? _step.ToInt();
-            }
+            get => _context?.ApplyProperty(_step).ToInt() ?? _step.ToInt();
         }
+
+        public string ContextFromKey;
+        public string ContextToKey;
+        public string ContextStepKey;
 
         public LoopEntity(XElement e) : base(e)
         {
@@ -41,8 +36,29 @@ namespace HtmlScraperLibrary.Entities
             _to = e.StringAttribute("to");
             _step = e.StringAttribute("step");
             _step = string.IsNullOrEmpty(_step) ? "1" : _step;
+            ContextFromKey = e.StringAttribute("contextFromKey");
+            ContextToKey = e.StringAttribute("contextToKey");
+            ContextStepKey = e.StringAttribute("contextStepKey");
         }
 
+        public override void SetProperties()
+        {
+            if (_context == null)
+                return;
+
+            if (!string.IsNullOrEmpty(ContextFromKey))
+            {
+                _context?.SetProperty(ContextFromKey, From.ToString());
+            }
+            if (!string.IsNullOrEmpty(ContextToKey))
+            {
+                _context?.SetProperty(ContextToKey, To.ToString());
+            }
+            if (!string.IsNullOrEmpty(ContextStepKey))
+            {
+                _context?.SetProperty(ContextStepKey, Step.ToString());
+            }
+        }
 
         public override async Task Extract(JsonNode jNode, HtmlNode node)
         {
@@ -54,8 +70,8 @@ namespace HtmlScraperLibrary.Entities
                 // Utilise un tableau pour collecter les résultats de la boucle
                 for (int i = From; i < To; i += Step)
                 {
+                    SetProperties();
                     var arrayResult = new JsonArray();
-
                     foreach (var child in Children)
                     {
                         await child.Extract(arrayResult, node);

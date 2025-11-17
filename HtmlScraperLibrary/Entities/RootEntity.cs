@@ -9,8 +9,14 @@ namespace HtmlScraperLibrary.Entities
     {
         public const string KEY = "root";
 
+        public ContextEntity Context
+        {
+            get => _context!;
+        }
+
         public RootEntity(XElement element) : base(element)
         {
+            LoadContext(new ContextEntity());
         }
 
         public async Task<JsonObject> Extract(HtmlDocument html)

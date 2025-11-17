@@ -8,11 +8,20 @@ namespace HtmlScraperLibrary.Entities
 {
     public class AParentEntity : AEntity
     {
-        public List<AEntity>? Children { get; } = new List<AEntity>();
+        public List<AEntity> Children { get; } = new List<AEntity>();
 
         public AParentEntity(XElement element) : base(element)
         {
             Children.AddRange(element.Elements().Select(EntityBuilder.BuildFromXml).Where(n => n != null).ToList()!);
+        }
+
+        public override void LoadContext(ContextEntity context)
+        {
+            base.LoadContext(context);
+            foreach (var child in Children)
+            {
+                child.LoadContext(context);
+            }
         }
 
         public override async Task Extract(JsonNode jObject, HtmlNode node)

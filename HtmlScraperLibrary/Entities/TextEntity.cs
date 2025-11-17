@@ -17,6 +17,15 @@ namespace HtmlScraperLibrary.Entities
             Formatters.AddRange(element.Elements().Select(FormatterBuilder.BuildFromXml).Where(n => n != null).ToList()!);
         }
 
+        public override void LoadContext(ContextEntity context)
+        {
+            base.LoadContext(context);
+            foreach (var formatter in Formatters)
+            {
+                formatter.LoadContext(context);
+            }
+        }
+
         public override Task Extract(JsonNode jObject, HtmlNode node)
         {
             var text = node.InnerHtml;
