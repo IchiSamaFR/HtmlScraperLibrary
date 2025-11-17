@@ -8,8 +8,6 @@ namespace HtmlScraperLibrary.Entities
 {
     public class SelectEntity : AParentEntity
     {
-        public const string KEY = "Select";
-
         public string IsArray { get; set; }
         public string Query { get; set; }
 

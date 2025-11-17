@@ -5,9 +5,8 @@ namespace HtmlScraperLibrary.Entities.Formatters
 {
     public class PrefixFormatter : ATextFormatter
     {
-        public const string KEY = "Prefix";
+        public string Value { get; set; } = string.Empty;
 
-        private string Value;
         public string ValueProperty
         {
             get => _context?.ApplyProperty(Value) ?? Value;

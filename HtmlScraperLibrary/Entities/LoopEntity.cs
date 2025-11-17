@@ -7,8 +7,6 @@ namespace HtmlScraperLibrary.Entities
 {
     public class LoopEntity : AParentEntity
     {
-        public const string KEY = "Loop";
-
         public string From { get; set; } = "0";
         public string To { get; set; } = "0";
         public string Step { get; set; } = "0";

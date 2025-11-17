@@ -6,11 +6,9 @@ namespace HtmlScraperLibrary.Entities.Formatters
 {
     public class ReplaceFormatter : ATextFormatter
     {
-        public const string KEY = "Replace";
-
-        public string OldValue{get;set;}
-        public string NewValue{get;set;}
-        public string IsRegex{get;set;}
+        public string OldValue { get; set; } = string.Empty;
+        public string NewValue { get; set; } = string.Empty;
+        public string IsRegex { get; set; } = string.Empty;
 
         public string OldValueProperty
         {

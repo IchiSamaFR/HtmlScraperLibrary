@@ -7,8 +7,6 @@ namespace HtmlScraperLibrary.Entities
 {
     public class RootEntity : AParentEntity
     {
-        public const string KEY = "Root";
-
         public ContextEntity Context
         {
             get => _context!;

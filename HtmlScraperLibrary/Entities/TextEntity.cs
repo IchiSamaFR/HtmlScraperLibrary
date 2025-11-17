@@ -9,8 +9,6 @@ namespace HtmlScraperLibrary.Entities
 {
     public class TextEntity : AEntity
     {
-        public const string KEY = "Text";
-
         public List<ATextFormatter> Formatters { get; } = new List<ATextFormatter>();
         public TextEntity(XElement element) : base(element)
         {
@@ -52,10 +50,6 @@ namespace HtmlScraperLibrary.Entities
                 if (!string.IsNullOrEmpty(OutputKeyProperty))
                 {
                     obj[OutputKeyProperty] = text;
-                }
-                else
-                {
-                    obj[KEY] = text;
                 }
             }
 

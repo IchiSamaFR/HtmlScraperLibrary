@@ -5,9 +5,7 @@ namespace HtmlScraperLibrary.Entities.Formatters
 {
     public class SuffixFormatter : ATextFormatter
     {
-        public const string KEY = "Suffix";
-
-        public string Value { get; set; }
+        public string Value { get; set; } = string.Empty;
 
         public string ValueProperty
         {
