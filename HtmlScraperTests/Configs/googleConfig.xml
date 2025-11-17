@@ -1,14 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Root>
-	<Select OutputKey="lst" IsArray="true">
-		<Loop Name="loop" From="0" To="2" OutputKey="loop{loop.ActualStep}">
-			<Select Query=".lst p" IsArray="true">
+	<!-- Test extraction de plusieurs résultats -->
+	<Select OutputKey="results" IsArray="true">
+		<Select OutputKey="item" Query=".result" IsArray="true">
+			<Select Query="h3">
 				<Text>
-					<Replace OldValue="te" NewValue="TE" />
-					<Prefix Value="Item: " />
-					<Suffix Value=";" />
+					<Replace OldValue="Title" NewValue="Titre" />
+					<Prefix Value=">> " />
+					<Suffix Value=" &lt;&lt;" />
 				</Text>
 			</Select>
-		</Loop>
+			<Select Query="span.desc">
+				<Text OutputKey="description" />
+			</Select>
+		</Select>
+	</Select>
+
+	<!-- Test extraction d'une liste simple -->
+	<Select OutputKey="lst" IsArray="true">
+		<Select Query=".lst p" IsArray="true">
+			<Text>
+				<Replace OldValue="test" NewValue="TEST" />
+				<Prefix Value="Item: " />
+				<Suffix Value=";" />
+			</Text>
+		</Select>
+	</Select>
+
+	<!-- Test extraction d'attributs personnalisés -->
+	<Select OutputKey="images" Query=".attributes img" IsArray="true">
+		<Select OutputKey="img">
+			<Attribute Value="src" OutputKey="src" />
+			<Attribute Value="alt" OutputKey="alt" />
+			<Attribute Value="data-id" OutputKey="id" />
+		</Select>
 	</Select>
 </Root>

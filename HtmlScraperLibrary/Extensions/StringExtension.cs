@@ -20,7 +20,7 @@ namespace HtmlScraperLibrary.Extensions
         {
             return active ? str.Trim() : str;
         }
-        public static string HTMLDecode(this string str, bool active)
+        public static string HTMLDecode(this string str, bool active = true)
         {
             return active ? HttpUtility.HtmlDecode(str) : str;
         }

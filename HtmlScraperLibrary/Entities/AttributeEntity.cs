@@ -2,19 +2,25 @@
 using HtmlScraperLibrary.Builders;
 using HtmlScraperLibrary.Entities.Formatters;
 using HtmlScraperLibrary.Extensions;
-using System.Formats.Tar;
 using System.Text.Json.Nodes;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace HtmlScraperLibrary.Entities
 {
-    public class TextEntity : AEntity
+    public class AttributeEntity : AEntity
     {
+        public string Value { get; set; } = string.Empty;
+
+        public string ValueProperty
+        {
+            get => _context?.ApplyProperty(Value) ?? Value;
+        }
+
         public List<ATextFormatter> Formatters { get; } = new List<ATextFormatter>();
-        public TextEntity(XElement element) : base(element)
+        public AttributeEntity(XElement element) : base(element)
         {
             Formatters.AddRange(element.Elements().Select(FormatterBuilder.BuildFromXml).Where(n => n != null).ToList()!);
+            Value = element.StringAttribute(nameof(Value));
         }
 
         public override void LoadContext(ContextEntity context)
@@ -28,7 +34,7 @@ namespace HtmlScraperLibrary.Entities
 
         public override Task Extract(JsonNode jObject, HtmlNode node)
         {
-            var text = node.InnerText;
+            var text = node.GetAttributeValue(ValueProperty, string.Empty);
 
             foreach (var format in Formatters)
             {

@@ -1,12 +1,24 @@
-﻿<html>
-    <body>
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Unit Test HTML</title>
+</head>
+<body>
+    <div id="main">
         <div class="result">
             <h3>Title 1</h3>
             <span class="desc">Description 1</span>
+            <a href="https://example.com/1" class="link">Link 1</a>
         </div>
         <div class="result">
             <h3>Title 2</h3>
             <span class="desc">Description 2</span>
+            <a href="https://example.com/2" class="link">Link 2</a>
+        </div>
+        <div class="result">
+            <h3>Title 3</h3>
+            <span class="desc">Description 3</span>
+            <a href="https://example.com/3" class="link">Link 3</a>
         </div>
         <div class="lst">
             <p>test1</p>
@@ -15,5 +27,14 @@
             <p>test4</p>
             <p>test5</p>
         </div>
-    </body>
+        <div class="attributes">
+            <img src="img1.png" alt="Image 1" data-id="101" />
+            <img src="img2.png" alt="Image 2" data-id="102" />
+        </div>
+        <div class="empty"></div>
+        <div class="special-chars">
+            &amp; &lt; &gt; &quot; &#39;
+        </div>
+    </div>
+</body>
 </html>

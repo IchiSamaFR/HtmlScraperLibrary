@@ -58,7 +58,14 @@ namespace HtmlScraperLibrary.Entities
                     }
                 }
 
-                jObject[OutputKeyProperty] = resultNode.DeepClone();
+                if(jObject is JsonArray array)
+                {
+                    array.Add(resultNode.DeepClone());
+                }
+                else if (jObject is JsonObject obj)
+                {
+                    obj.Add(OutputKeyProperty, resultNode.DeepClone());
+                }
             }
             else
             {
