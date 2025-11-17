@@ -1,4 +1,6 @@
-﻿using HtmlScraperLibrary.Extensions;
+﻿using HtmlAgilityPack;
+using HtmlScraperLibrary.Extensions;
+using System.Text.Json.Nodes;
 using System.Xml.Linq;
 
 namespace HtmlScraperLibrary.Entities
@@ -38,6 +40,48 @@ namespace HtmlScraperLibrary.Entities
             _from = e.StringAttribute("from");
             _to = e.StringAttribute("to");
             _step = e.StringAttribute("step");
+            _step = string.IsNullOrEmpty(_step) ? "1" : _step;
+        }
+
+
+        public override async Task Extract(JsonNode jNode, HtmlNode node)
+        {
+            if (Children == null || Children.Count == 0)
+                return;
+
+            if (!string.IsNullOrEmpty(OutputKey))
+            {
+                // Utilise un tableau pour collecter les résultats de la boucle
+                for (int i = From; i < To; i += Step)
+                {
+                    var arrayResult = new JsonArray();
+
+                    foreach (var child in Children)
+                    {
+                        await child.Extract(arrayResult, node);
+                    }
+
+                    if (jNode is JsonObject obj)
+                    {
+                        obj[OutputKey] = arrayResult;
+                    }
+                    else if (jNode is JsonArray arr)
+                    {
+                        arr.Add(new JsonObject { [OutputKey] = arrayResult });
+                    }
+                }
+            }
+            else
+            {
+                // Passe directement jNode aux enfants pour chaque itération
+                for (int i = From; i < To; i += Step)
+                {
+                    foreach (var child in Children)
+                    {
+                        await child.Extract(jNode, node);
+                    }
+                }
+            }
         }
     }
 }

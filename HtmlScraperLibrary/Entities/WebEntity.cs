@@ -7,7 +7,7 @@ namespace HtmlScraperLibrary.Entities
     {
         public const string KEY = "web";
 
-        public WebEntity(XElement e) : base(e)
+        public WebEntity(XElement element) : base(element)
         {
         }
     }

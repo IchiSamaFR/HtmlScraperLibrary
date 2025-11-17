@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
-	<loop name="page" start="1" end="1">
-		<web url="Configs/google.html" method="get">
-			<select query=".lst">
-				<select query="p" outputKey="lst" isArray="true">
-					<text outputKey="item"/>
+	<select outputKey="lst" isArray="true">
+		<loop name="page" from="0" to="2">
+			<web url="Configs/google.html" method="get">
+				<select query=".lst p" isArray="true">
+					<text>
+						<replace oldValue="te" newValue="TE" />
+						<prefix value="Item: " />
+						<suffix value=";" />
+					</text>
 				</select>
-			</select>
-		</web>
-	</loop>
+			</web>
+		</loop>
+	</select>
 </root>

@@ -13,8 +13,4 @@
     <PackageReference Include="PuppeteerSharp" Version="20.0.5" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\Formats\" />
-  </ItemGroup>
-
 </Project>

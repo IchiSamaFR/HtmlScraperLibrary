@@ -23,16 +23,23 @@ namespace HtmlScraperLibrary.Entities
             get => _context?.ApplyProperty(_query) ?? _query;
         }
 
-        public SelectEntity(XElement e) : base(e)
+        public SelectEntity(XElement element) : base(element)
         {
-            _isArray = e.StringAttribute("isArray");
-            _query = e.StringAttribute("query");
+            _isArray = element.StringAttribute("isArray");
+            _query = element.StringAttribute("query");
         }
 
-        public override async Task Extract(JsonObject jObject, HtmlNode node)
+        public override async Task Extract(JsonNode jObject, HtmlNode node)
         {
+            if (Children == null || Children.Count == 0)
+                return;
+
             List<HtmlNode> nodesQuery = new();
-            if (IsArray)
+            if (string.IsNullOrEmpty(Query))
+            {
+                nodesQuery.Add(node);
+            }
+            else if (IsArray)
             {
                 nodesQuery.AddRange(node.QuerySelectorAll(Query));
             }
@@ -41,52 +48,30 @@ namespace HtmlScraperLibrary.Entities
                 nodesQuery.Add(node.QuerySelector(Query));
             }
 
-
-            // If no children, nothing to extract
-            if (Children == null)
-            {
-                return;
-            }
-
-            // Prépare le conteneur de résultat selon IsArray
-            JsonNode resultNode = IsArray ? new JsonArray() : new JsonObject();
-            foreach (var query in nodesQuery.Where(n => n != null))
-            {
-                foreach (var child in Children)
-                {
-                    // On crée un objet temporaire pour chaque enfant
-                    var childObj = new JsonObject();
-                    await child.Extract(childObj, query);
-
-
-                    if (IsArray)
-                    {
-                        // Ajoute une copie profonde pour éviter l'erreur de parent
-                        ((JsonArray)resultNode).Add(childObj.DeepClone());
-                        continue;
-                    }
-
-                    foreach (var prop in childObj)
-                    {
-                        ((JsonObject)resultNode)[prop.Key] = prop.Value?.DeepClone();
-                    }
-                }
-            }
-
-            // Place le résultat dans le parent si OutputKey est défini
             if (!string.IsNullOrEmpty(OutputKey))
             {
+                // On prépare le conteneur de résultat selon IsArray
+                JsonNode resultNode = IsArray ? new JsonArray() : new JsonObject();
+
+                foreach (var query in nodesQuery.Where(n => n != null))
+                {
+                    foreach (var child in Children)
+                    {
+                        await child.Extract(resultNode, query);
+                    }
+                }
+
                 jObject[OutputKey] = resultNode.DeepClone();
-            }
-            else if (IsArray)
-            {
-                jObject.Merge(resultNode);
             }
             else
             {
-                foreach (var prop in (JsonObject)resultNode)
+                // Passe directement jObject aux enfants
+                foreach (var query in nodesQuery.Where(n => n != null))
                 {
-                    jObject[prop.Key] = prop.Value?.DeepClone();
+                    foreach (var child in Children)
+                    {
+                        await child.Extract(jObject, query);
+                    }
                 }
             }
         }

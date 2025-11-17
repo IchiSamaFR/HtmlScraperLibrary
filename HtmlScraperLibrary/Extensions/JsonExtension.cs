@@ -32,7 +32,7 @@ namespace HtmlScraperLibrary.Extensions
                 // Ici, on ajoute chaque élément sous une clé indexée
                 for (int i = 0; i < sourceArray.Count; i++)
                 {
-                    target[i.ToString()] = sourceArray[i];
+                    target[i.ToString()] = sourceArray[i].DeepClone();
                 }
             }
             // Sinon, rien à faire pour les autres types

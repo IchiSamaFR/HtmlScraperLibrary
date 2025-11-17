@@ -30,10 +30,10 @@ namespace HtmlScraperLibrary.Entities
             _outputKey = element.StringAttribute("outputKey");
         }
 
-        public virtual void LoadContext(ContextEntity context)
+        public void LoadContext(ContextEntity context)
         {
             _context = context;
         }
-        public abstract Task Extract(JsonObject jObject, HtmlNode node);
+        public abstract Task Extract(JsonNode jObject, HtmlNode node);
     }
 }
