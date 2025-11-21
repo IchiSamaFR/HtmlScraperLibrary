@@ -21,6 +21,11 @@ namespace HtmlScraperLibrary.Builders
                 );
         }
 
+        public static AEntity? BuildFromFilePath(string path)
+        {
+            var element = XElement.Load(path);
+            return BuildFromXml(element);
+        }
         public static AEntity? BuildFromXml(XElement element)
         {
             if (_entityTypes.TryGetValue(element.Name.LocalName, out var type))
