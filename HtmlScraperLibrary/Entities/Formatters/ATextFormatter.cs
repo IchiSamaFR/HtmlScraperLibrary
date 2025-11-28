@@ -11,6 +11,18 @@ namespace HtmlScraperLibrary.Entities.Formatters
     {
         protected ContextEntity? _context = null!;
 
+        public string Type
+        {
+            get
+            {
+                string typeName = GetType().Name;
+                if (typeName.EndsWith("Formatter"))
+                {
+                    return typeName.Substring(0, typeName.Length - 9);
+                }
+                return typeName;
+            }
+        }
         public void LoadContext(ContextEntity context)
         {
             _context = context;

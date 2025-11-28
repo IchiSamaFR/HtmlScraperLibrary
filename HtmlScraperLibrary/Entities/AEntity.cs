@@ -18,6 +18,18 @@ namespace HtmlScraperLibrary.Entities
     {
         protected ContextEntity? _context = null!;
 
+        public string Type
+        {
+            get
+            {
+                string typeName = GetType().Name;
+                if (typeName.EndsWith("Entity"))
+                {
+                    return typeName.Substring(0, typeName.Length - 6);
+                }
+                return typeName;
+            }
+        }
         public string OutputKey { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
 
